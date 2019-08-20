@@ -52,15 +52,15 @@ public class GuavaTester {
                 '}';
     }
 
-    public <T> T test2(JSONObject jo, Class<T> c) {
+    public <T> T underline2Camel(JSONObject jo, Class<T> c) {
         Set<String> keys = jo.keySet();
         JSONObject jo2 = new JSONObject();
         for (String key : keys) {
             String newKey = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, key);
             jo2.put(newKey, jo.getString(key));
         }
-        T g3 = JSON.toJavaObject(jo2, c);
-        return g3;
+        T t = JSON.toJavaObject(jo2, c);
+        return t;
     }
 
     @Test
@@ -69,7 +69,7 @@ public class GuavaTester {
         jo.put("user_name", "xx");
         jo.put("user_age", "yy");
         jo.put("user_age2", "yy");
-        GuavaTester guavaTester = test2(jo, GuavaTester.class);
+        GuavaTester guavaTester = underline2Camel(jo, GuavaTester.class);
         System.out.println(guavaTester);
     }
 
