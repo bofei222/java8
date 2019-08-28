@@ -15,6 +15,7 @@ public class TestList {
         list.add("1");
 
 //        System.out.println(list.get(10));
+
         System.out.println(list.get(0));
 
         Integer[] arr = new Integer[20];
