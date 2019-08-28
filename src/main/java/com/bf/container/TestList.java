@@ -1,6 +1,8 @@
 package com.bf.container;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author bofei
@@ -9,15 +11,26 @@ import java.util.ArrayList;
  */
 public class TestList {
     public static void main(String[] args) {
-        ArrayList<Object> list = new ArrayList<>();
-        int i = 0;
-        while (true) {
+        List list = new ArrayList<>(89);
+        list.add("1");
 
-            list.add(i++);
-            System.out.println(list.size());
-            list.clear();
+//        System.out.println(list.get(10));
+        System.out.println(list.get(0));
 
-        }
+        Integer[] arr = new Integer[20];
+        System.out.println(arr[2]);
+        System.out.println(arr.length);
+
+
+//        ArrayList<Object> list = new ArrayList<>();
+//        int i = 0;
+//        while (true) {
+//
+//            list.add(i++);
+//            System.out.println(list.size());
+//            list.clear();
+//
+//        }
 
 
     }
