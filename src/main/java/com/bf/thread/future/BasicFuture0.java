@@ -19,8 +19,8 @@ public class BasicFuture0 {
             // 然后返回结果
             return 100;
         });
-//        while(!f.isDone())
-//            ;
+        while(!f.isDone())
+            ;
         f.get();
     }
 }

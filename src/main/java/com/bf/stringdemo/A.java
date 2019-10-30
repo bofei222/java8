@@ -11,6 +11,12 @@ import java.math.BigDecimal;
  */
 public class A {
     public static void main(String[] args) {
+        String a = BigDecimal.ZERO.toString();
+        System.out.println(a);
+        int roundHalfUp = BigDecimal.ROUND_HALF_UP;
+        System.out.println(roundHalfUp);
+    }
+    public static void main4(String[] args) {
         Double i = 1.0d / 0.0;
         double j = 0.0d / 0.0;
         if (i == null) {
