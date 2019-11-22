@@ -5,9 +5,9 @@ package com.bf.java8.funreference;
  *
  */
 @FunctionalInterface
-interface IMessage<P> {
-//    R upper();
-    int compare(P p1, P p2);
+interface IMessage<R> {
+    R upper();
+//    int compare(P p1, P p2);
 }
 
 public class TestDemo {
@@ -15,13 +15,14 @@ public class TestDemo {
 //        IMessage<Integer,String> msg = String::valueOf;
 //        String s = msg.zhuanhuan(1000);
 
-//        IMessage<String> msg = "hello"::toUpperCase;
-//        String s = msg.upper();
+        /*IMessage<String> msg = "hello"::toUpperCase;
+        String s = msg.upper();*/
 
-        IMessage<String> msg = String::compareTo;
-        System.out.println(msg.compare("A", "B"));// 将对象定义在了参数
+        /*IMessage<String> msg = String::compareTo;
+        System.out.println(msg.compare("A", "B"));// 将对象定义在了参数*/
 
 
+//        IMessage r = new
 //        System.out.println(s);
     }
 }
