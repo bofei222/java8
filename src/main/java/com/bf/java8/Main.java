@@ -21,10 +21,9 @@ public class Main {
         list.sort(Comparator.comparingInt(a -> a));
 //        System.out.println(list);
 
-
         MathOperation add = (a, b) -> a + b + 1;
         MathOperation sub = (a, b) -> a - b + 1;
-        MathOperation sum = (a, b) -> a - b + 2;
+        MathOperation sum2 = (a, b) -> a - b + 2;
 
         int b = operate(add, 1, 2);// 4
         int a = operate(sub, 1, 2);// 0
@@ -32,11 +31,15 @@ public class Main {
         System.out.println(b);
 //        operate((a, b) -> a - b + 2 , 1, 2);
 
+
+
     }
 
     public static int operate(MathOperation s, Integer a, Integer b) {
         return s.operation(a, b);
     }
+
+
 
 }
 
@@ -45,3 +48,5 @@ interface MathOperation {
 //    int operation2(int a, int b,int c); // 有 两个方法会报错
 
 }
+
+
