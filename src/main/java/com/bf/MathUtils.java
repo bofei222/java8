@@ -10,6 +10,32 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @date: 2019-12-04 14:08
  **/
 public class MathUtils {
+    public static void main(String[] args) {
+        String s = MathUtils.elegantMultiply("800.0100", "1");
+        System.out.println(s);
+    }
+    public static String elegantMultiply(String v1, String v2) {
+        if (isBlank(v1)) {
+            return "";
+        }
+        if (isBlank(v2)) {
+            return "";
+        }
+        BigDecimal b1 = new BigDecimal(v1.trim());
+        BigDecimal b2 = new BigDecimal(v2.trim());
+        return String.valueOf(multiply(b1, b2).stripTrailingZeros().toPlainString());
+    }
+
+    public static BigDecimal multiply(BigDecimal v1, BigDecimal v2) {
+        if (null == v1) {
+            v1 = BigDecimal.ONE;
+        }
+        if (null == v2) {
+            v2 = BigDecimal.ONE;
+        }
+        return v1.multiply(v2);
+    }
+
     public static BigDecimal add(BigDecimal v1, BigDecimal v2) {
         if (null == v1) {
             v1 = BigDecimal.ZERO;
@@ -19,6 +45,7 @@ public class MathUtils {
         }
         return v1.add(v2);
     }
+
     public static String add(String v1, String v2) {
         if (isBlank(v1)) {
             v1 = "0";
@@ -30,6 +57,7 @@ public class MathUtils {
         BigDecimal b2 = new BigDecimal(v2.trim());
         return String.valueOf(add(b1, b2));
     }
+
     public static String sum(String v1, String... valList) {
         if (isBlank(v1)) {
             v1 = "0";
@@ -45,6 +73,7 @@ public class MathUtils {
         }
         return String.valueOf(b1);
     }
+
     public static BigDecimal sum(BigDecimal v1, BigDecimal... valList) {
         if (null == v1) {
             v1 = BigDecimal.ZERO;

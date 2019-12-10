@@ -37,11 +37,13 @@ public class C {
         System.out.println(apply);
 //        System.out.println(getter(getY, c)); // 30
 
-        setter(C::setH, c);
+//        setter(C::setH, c);
+
+
     }
 
 
-// 没有getter也可以 😂
+// 没有此方法也可以
 //    public static <T> int getter(F<T> f, T t) {
 //        return f.apply(t);
 //    }

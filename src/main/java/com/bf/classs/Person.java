@@ -59,7 +59,7 @@ public class Person {
     }
 
     public static void main(String[] args) {
-        com.bf.classs.sub.Person person = new com.bf.classs.sub.Person("boo", "fei", LocalDate.now());
+        Person person = new Person("boo", "fei", LocalDate.now());
         System.out.println(person);
     }
 }
