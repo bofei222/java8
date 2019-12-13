@@ -13,6 +13,11 @@ public class MathUtils {
     public static void main(String[] args) {
         String s = MathUtils.elegantMultiply("800.0100", "1");
         System.out.println(s);
+
+        BigDecimal b = new BigDecimal("0.00");
+        if (b.compareTo(BigDecimal.ZERO) == 0.0000) {
+            System.out.println(0);
+        }
     }
     public static String elegantMultiply(String v1, String v2) {
         if (isBlank(v1)) {

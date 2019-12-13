@@ -27,9 +27,14 @@ public class C {
     }
     public static void main(String[] args) {
         C c = new C();
-//        System.out.println(getter(C::getH, c));// 10
+        System.out.println(getter(c1 -> 1
+                , c));// 10
 
-//        System.out.println(getter(C::getJ, c));// 20
+
+
+        System.out.println(getter(C::getJ, c));// 20
+
+
 
         F<C> getY = (a) -> {return 30;};  // lambda表达式 没有this
 
@@ -44,9 +49,9 @@ public class C {
 
 
 // 没有此方法也可以
-//    public static <T> int getter(F<T> f, T t) {
-//        return f.apply(t);
-//    }
+    public static <T> int getter(F<T> f, T t) {
+        return f.apply(t);
+    }
 
     public static <T> void setter(Consumer<T> consumer, T t) {
         consumer.accept(t);
