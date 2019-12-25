@@ -1,4 +1,4 @@
-package com.bf.leetcode;
+package com.bf.algs.leetcode;
 
 import java.util.Arrays;
 import java.util.LinkedList;

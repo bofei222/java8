@@ -34,6 +34,22 @@ public class UseFoo {
                 return string + " from Foo";
             }
         };
+        // 有点像匿名内部类
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(1);
+            }
+        };
+        Thread thread = new Thread(r);
+
+        // 匿名内部类
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(1);
+            }
+        });
 
         String result3 = useFoo.add("Message ", fooByIC);
         System.out.println(result3);

@@ -1,6 +1,5 @@
-package com.bf.leetcode;
+package com.bf.algs.leetcode;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Solution15 {
