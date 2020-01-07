@@ -52,7 +52,7 @@ class StarHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object o = null;
-        if (method.getName().equals("sing")) {
+        if (method.getName().equals("confer")) {
             System.out.println("前置处理");
             o = method.invoke(real, args);
             System.out.println("后置处理");
