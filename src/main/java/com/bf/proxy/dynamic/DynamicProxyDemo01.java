@@ -13,8 +13,10 @@ public class DynamicProxyDemo01 {
     public static void main(String[] args) {
         RealSubject realSubject = new RealSubject();    //1.创建委托对象
         ProxyHandler handler = new ProxyHandler(realSubject);   //2.创建调用处理器对象
+        System.out.println("realSubject " + realSubject);
         Subject proxySubject = (Subject) Proxy.newProxyInstance(RealSubject.class.getClassLoader(),
                 RealSubject.class.getInterfaces(), handler);    //3.动态生成代理对象
+        System.out.println("proxySubject " + proxySubject);
         proxySubject.request(); //4.通过代理对象调用方法
     }
 }
