@@ -23,12 +23,12 @@ public class ItemTag {
         List<ItemTag> list = new ArrayList<>();
 
         ItemTag b = new ItemTag();
-        b.setItemTagName("001");
-        b.setItemTagCode("a");
+        b.setItemTagName("002");
+        b.setItemTagCode("b");
 
         ItemTag c = new ItemTag();
-        c.setItemTagName("001");
-        c.setItemTagCode("a");
+        c.setItemTagName("003");
+        c.setItemTagCode("c");
 
         list.add(b);
         list.add(c);
