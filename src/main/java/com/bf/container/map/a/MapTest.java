@@ -12,8 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class MapTest {
     public static void main(String[] args) {
-//        Map map = new HashMap<>(); // Exception in thread "main" java.util.ConcurrentModificationException
-        Map map = new ConcurrentHashMap();
+        // 并发修改异常
+        Map map = new HashMap<>(); // Exception in thread "main" java.util.ConcurrentModificationException
+//        Map map = new ConcurrentHashMap();
         map.put(1, "a");
         map.put(2, "b");
         Set keySet = map.keySet();
