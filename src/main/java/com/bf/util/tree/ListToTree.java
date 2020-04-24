@@ -46,17 +46,20 @@ public class ListToTree {
         }
 
         //loop and assign parent/child relationships
+        // 找到所有的父节点，
+        // 并设置child关联关系， 即可通过引用 链接起来
         for (Node current : nodes) {
             String parentId = current.getParentId();
 
+            // 当pId是null 是根节点
             if (parentId != null) {
                 Node parent = mapTmp.get(parentId);
-                if (parent != null) {
-                    current.setParent(parent);
+//                if (parent != null) {
+//                    current.setParent(parent);
                     parent.addChild(current);
-                    mapTmp.put(parentId, parent);
-                    mapTmp.put(current.getId(), current);
-                }
+//                    mapTmp.put(parentId, parent);
+//                    mapTmp.put(current.getId(), current);
+//                }
             }
 
         }

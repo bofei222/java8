@@ -16,6 +16,7 @@ public class Node {
     private String value;
     private Node parent;
 
+    // 存的子 不是存的父 单向链表
     private List<Node> children;
 
     public Node() {

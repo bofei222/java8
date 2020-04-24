@@ -4,12 +4,13 @@ import java.util.HashMap;
 
 public class MapDemo {
     public static void main(String[] args) {
-        HashMap<Object, Object> map = new HashMap<>(17);
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put(1, "a");
 
         int i = tableSizeFor(17);
         System.out.println(i);
 
-        map.put(1, "a");
+
 
 
         int a = 1;
