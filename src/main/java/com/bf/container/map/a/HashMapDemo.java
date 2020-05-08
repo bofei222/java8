@@ -25,10 +25,13 @@ public class HashMapDemo {
 
         System.out.println("put------------------------");
 
-        map.put("hollis", "hollischuang");
-
+        String put1 = map.put("hollis", "hollischuang");
+        System.out.println("put1 : " + put1);
         System.out.println("capacity : " + capacity.invoke(map));
-
+        String put2 = map.put("hollis", "hollischuang");
+        System.out.println("put2 : " + put2);
+        String put3 = map.put("hollis3", "hollischuang");
+        System.out.println("put3 : " + put3);
 
         Field size1 = mapType.getDeclaredField("size");
         size1.setAccessible(true);
