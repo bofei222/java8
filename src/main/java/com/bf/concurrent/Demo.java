@@ -1,4 +1,4 @@
-package com.bf.concurent;
+package com.bf.concurrent;
 
 import com.bf.stringdemo.A;
 
@@ -7,7 +7,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Demo {
     public static void main(String[] args) {
-        AbstractQueuedSynchronizer a;
+        try {
+            AbstractQueuedSynchronizer a;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ReentrantLock reentrantLock;
     }
 }

@@ -1,4 +1,4 @@
-package com.bf.concurent;
+package com.bf.concurrent;
 
 import java.util.concurrent.locks.ReentrantLock;
 
