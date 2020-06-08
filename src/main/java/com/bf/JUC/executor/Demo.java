@@ -6,10 +6,13 @@ import java.util.concurrent.*;
 
 public class Demo {
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(100);//创建固定大小的线程池
         ExecutorService executorService1 = Executors.newSingleThreadExecutor();//创建只有一个线程的线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(100);//创建固定大小的线程池
         ExecutorService executorService2 = Executors.newCachedThreadPool(); //创建一个不限线程数上限的线程池，任何提交的任务都将立即执行
 
+        ScheduledExecutorService scheduledExecutorService1 = Executors.newScheduledThreadPool(1);
+
+        ExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
 //        new ThreadPoolExecutor
 //
