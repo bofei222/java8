@@ -1,4 +1,4 @@
-package com.bf.JUC.syncmain;
+package com.bf.JUC.sync.inherit;
 
 public class SyncMain {
 
