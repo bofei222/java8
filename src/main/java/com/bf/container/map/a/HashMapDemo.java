@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @description:
@@ -15,7 +16,6 @@ import java.util.HashMap;
 public class HashMapDemo {
     public static void main(String[] args) throws NoSuchMethodException, NoSuchFieldException, InvocationTargetException, IllegalAccessException {
         HashMap<String, String> map = new HashMap<String, String>();
-
         Class<?> mapType = map.getClass();
         Method capacity = mapType.getDeclaredMethod("capacity");
         capacity.setAccessible(true);
