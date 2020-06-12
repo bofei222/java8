@@ -22,5 +22,6 @@ public class BasicFuture0 {
         while(!f.isDone())
             ;
         f.get();
+
     }
 }

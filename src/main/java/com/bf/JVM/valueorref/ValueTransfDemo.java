@@ -53,5 +53,10 @@ public class ValueTransfDemo {
         String abc2 = new String("abv");
         System.out.println(abc == abc2);
         System.out.println(abc.equals(abc2));
+
+        System.out.println("String常量池==================");
+        String abd = "abd";
+        String abd2 = "abd";
+        System.out.println(abd == abd2);
     }
 }
