@@ -6,6 +6,7 @@ public class RunnableDemo  {
     }
 
     public static void main(String[] args) {
+        new Thread().start();
         RunnableDemo rd = new RunnableDemo(){
             @Override
           public void test() {
