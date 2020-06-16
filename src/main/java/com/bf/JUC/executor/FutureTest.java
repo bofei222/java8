@@ -16,19 +16,14 @@ public class FutureTest {
 
     }
     public static void main(String[] args) {
-        new Thread(new Thread() {
-            @Override
-            public void run() {
 
-            }
-        });
         ExecutorService threadPool = Executors.newSingleThreadExecutor();
 
-        SimpleTask task = new SimpleTask(3_000); // task 需要运行 3 秒
+        SimpleTask task = new SimpleTask(4_000); // task 需要运行 3 秒
         Future<Double> future = threadPool.submit(task);
         threadPool.shutdown(); // 发送关闭线程池的指令
 
-        cancelTask(future, 2_000); // 在 2 秒之后取消该任务
+        cancelTask(future, 1_000); // 在 2 秒之后取消该任务
 
         try {
             double time = future.get();
@@ -77,6 +72,7 @@ public class FutureTest {
             double end = System.nanoTime();
             double time = (end - begin) / 1E9;
 
+            System.out.println("任务执行完毕");
             return time; // 返回任务运行的时间，以 秒 计
         }
 

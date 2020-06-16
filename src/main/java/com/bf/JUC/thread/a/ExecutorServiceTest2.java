@@ -9,11 +9,12 @@ import java.util.concurrent.*;
  * @author: bofei
  * @date: 2020-01-02 13:28
  **/
-public class ScheduledExecutorServiceTest2 {
-    static ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+public class ExecutorServiceTest2 {
+    // 之前为什么 不并发执行，因为这里设置了1，只有一个线程
+    static ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     static Map<String, Future> map = new HashMap<>();
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
 
     Future<?> future = executorService.submit(new Runnable() {
@@ -31,7 +32,6 @@ public class ScheduledExecutorServiceTest2 {
         });
         map.put("1", future);
 
-        System.out.println("主线程");
 //        Thread.sleep(1000);
 //        future.cancel(false);
 
@@ -40,18 +40,16 @@ public class ScheduledExecutorServiceTest2 {
         Future<?> future2 = executorService.submit(new Runnable() {
             @Override
             public void run() {
-                System.out.println("任务线程2开始");
                 Future future1 = map.get("1");
 
                 System.out.println(future1.cancel(true));;
                 System.out.println("取消任务1");
-                System.out.println("任务线程2开始");
+
             }
         });
 
-
+        executorService.shutdown();
         System.out.println("end");
-
 
     }
 }
