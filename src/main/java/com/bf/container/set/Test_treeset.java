@@ -11,6 +11,14 @@ import java.util.TreeSet;
  */
 public class Test_treeset {
     public static void main(String[] args) {
+
+
+        /*public TreeSet()public TreeSet()
+        构造一个新的空 set，该 set 根据其元素的自然顺序进行排序。
+        *插入该 set 的所有元素都必须实现 Comparable 接口。
+        所有这些元素都必须是可互相比较的：*/
+
+        // 如果 不 显示 会报错 ：ClassCastException: com.bf.container.set.Teacher cannot be cast to java.lang.Comparable
         Set<Teacher> ts = new TreeSet<Teacher>();
         ts.add(new Teacher("zhangsan", 1));
         ts.add(new Teacher("lisi", 3));
@@ -24,7 +32,7 @@ public class Test_treeset {
         }
     }
 }
-class Teacher implements Comparable {
+class Teacher   {
     int num;
     String name;
 
