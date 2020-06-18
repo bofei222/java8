@@ -23,7 +23,7 @@ public class FutureTest {
         Future<Double> future = threadPool.submit(task);
         threadPool.shutdown(); // 发送关闭线程池的指令
 
-        cancelTask(future, 1_000); // 在 2 秒之后取消该任务
+        cancelTask(future, 10); // 在 2 秒之后取消该任务
 
         try {
             double time = future.get();

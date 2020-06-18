@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  * @date: 2020-06-16 09:56
  **/
 public class FutureTest2 {
-    public static void main2(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         ExecutorService threadPool = Executors.newSingleThreadExecutor();
 
         long num = 1000000033L;
@@ -16,7 +16,7 @@ public class FutureTest2 {
         Future<Boolean> future = threadPool.submit(task);
         threadPool.shutdown(); // 发送关闭线程池的指令
 
-        cancelTask(future, 2_000); // 在 2 秒之后取消该任务
+        cancelTask(future, 1_00); // 在 2 秒之后取消该任务
 
         try {
             boolean result = future.get();
@@ -29,30 +29,16 @@ public class FutureTest2 {
             System.err.println("任务执行出错");
         }
     }
-    public static void main(String[] args) throws Exception {
-        ExecutorService threadPool = Executors.newSingleThreadExecutor();
 
-        long num = 1000000033L;
-        PrimerTask task = new PrimerTask(num);
-        Future<Boolean> future = threadPool.submit(task);
-        threadPool.shutdown();
-
-        boolean result = future.get();
-        System.out.format("%d 是否为素数？ %b\n", num, result);
-
-    }
 
     private static void cancelTask(final Future<?> future, final int delay) {
 
-        Runnable cancellation = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(delay);
-                    future.cancel(true); // 取消与 future 关联的正在运行的任务
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace(System.err);
-                }
+        Runnable cancellation = () -> {
+            try {
+                Thread.sleep(delay);
+                future.cancel(true); // 取消与 future 关联的正在运行的任务
+            } catch (InterruptedException ex) {
+                ex.printStackTrace(System.err);
             }
         };
 
@@ -70,12 +56,17 @@ public class FutureTest2 {
         @Override
         public Boolean call() throws Exception {
             // i < num 让任务有足够的运行时间
+            long l = System.currentTimeMillis();
             for (long i = 2; i < num; i++) {
+                /*if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("PrimerTask.call： 你取消我干啥？");
+                    return false;
+                }*/
                 if (num % i == 0) {
                     return false;
                 }
             }
-            System.out.println("任务执行完毕");
+            System.out.println("任务执行完毕" + (System.currentTimeMillis() - l));
             return true;
         }
 
