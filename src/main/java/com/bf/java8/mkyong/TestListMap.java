@@ -19,11 +19,12 @@ public class TestListMap {
         list.add(new Hosting(2, "linode.com", 90000));
         list.add(new Hosting(3, "digitalocean.com", 120000));
         list.add(new Hosting(4, "aws.amazon.com", 200000));
-        list.add(new Hosting(5, "mkyong.com", 1));
+        list.add(new Hosting(5, "mkyong.com1", 1));
+        list.add(new Hosting(5, "mkyong.com2", 2));
 
         // key = id, value - websites
         Map<Integer, String> result1 = list.stream().collect(
-                Collectors.toMap(Hosting::getId, Hosting::getName));
+                Collectors.toMap(Hosting::getId, Hosting::getName, (v1,v2) -> v1+","+v2));
 
         System.out.println("Result 1 : " + result1);
 
