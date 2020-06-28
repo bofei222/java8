@@ -33,6 +33,7 @@
             <artifactId>swagger-core</artifactId>
             <version>1.6.1</version>
         </dependency>
+
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>

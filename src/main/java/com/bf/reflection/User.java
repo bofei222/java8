@@ -8,11 +8,11 @@ public class User {
 
     private Integer userId;
 
-    @MyPDF
+    @MyPDF(value = "名称")
     @ApiModelProperty(value = "名称")
     private String userName;
 
-    @MyPDF
+    @MyPDF(value = "名称")
     @ApiModelProperty(value = "编码")
     private String code;
 
