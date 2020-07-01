@@ -12,6 +12,8 @@ public class ShortDemo {
 //        那s1是short ，不是int ，小的转大的 直接操作，不用强转，  大的转小的 要强转
         s1 += 1; // += 自动转型
 
+        Short s22 = null;
+        short s = s22; // 空指针
 
     }
 }
