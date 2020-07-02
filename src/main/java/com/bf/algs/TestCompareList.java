@@ -21,9 +21,9 @@ public class TestCompareList {
             list2.add("test" + i * 2);
         }
 
-        System.out.println(getDiffrent1(list1, list2).size());;
+//        System.out.println(getDiffrent1(list1, list2).size());;
 //        getDiffrent2(list1, list2);
-        System.out.println(getDiffrent3(list1, list2).size());;
+        System.out.println(getDiffrent3(list1, list2));;
 //        getDiffrent4(list1, list2);
     }
 
