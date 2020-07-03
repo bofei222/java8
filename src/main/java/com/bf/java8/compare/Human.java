@@ -9,11 +9,20 @@ import lombok.Data;
  **/
 @Data
 public class Human {
-    private String name;
-    private int age;
+    String name;
+    int age;
 
     public Human(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    // 与 Comparator 接口的 compare方法 有完全相同的签名
+    public static int compareByNameThenAge(Human lhs, Human rhs) {
+        if (lhs.name.equals(rhs.name)) {
+            return lhs.age - rhs.age;
+        } else {
+            return lhs.name.compareTo(rhs.name);
+        }
     }
 }

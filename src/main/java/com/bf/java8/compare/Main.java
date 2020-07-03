@@ -19,6 +19,54 @@ import static org.junit.Assert.assertThat;
 public class Main {
 
     @Test
+    public void
+    givenInstanceMethod_whenSortingEntitiesByName_thenCorrectlySorted() {
+
+        List<Human> humans = Lists.newArrayList(
+                new Human("Sarah", 10),
+                new Human("Jack", 12)
+        );
+
+        Collections.sort(
+                humans, Comparator.comparing(Human::getName));
+        assertThat(humans.get(0), equalTo(new Human("Jack", 12)));
+    }
+
+    /// 静态方法
+    @Test
+    public void
+    givenMethodDefinition_whenSortingEntitiesByNameThenAge_thenCorrectlySorted() {
+
+        List<Human> humans = Lists.newArrayList(
+                new Human("Sarah", 10),
+                new Human("Jack", 12)
+        );
+
+        humans.sort(Human::compareByNameThenAge);
+        Assert.assertThat(humans.get(0), equalTo(new Human("Jack", 12)));
+    }
+
+
+    // 不定义类型
+    //  Basic Sorting With No Type Definitions
+    @Test
+    public void givenLambdaShortForm_whenSortingEntitiesByName_thenCorrectlySorted() {
+
+        List<Human> humans = Lists.newArrayList(
+                new Human("Sarah", 10),
+                new Human("Jack", 12)
+        );
+
+        humans.sort((h1, h2) -> h1.getName().compareTo(h2.getName()));
+
+        assertThat(humans.get(0), equalTo(new Human("Jack", 12)));
+    }
+
+
+    // lambda
+    // 引入lambda， 可以避开匿名内部类
+    // With the introduction of Lambdas, we can now bypass the anonymous inner class and achieve the same result with simple, functional semantics:
+    @Test
     public void whenSortingEntitiesByName_thenCorrectlySorted() {
         List<Human> humans = Lists.newArrayList(
                 new Human("Sarah", 10),
@@ -32,6 +80,8 @@ public class Main {
         assertThat(humans.get(0), equalTo(new Human("Jack", 12)));
     }
 
+    // 非 lambda
+    // Before Java 8, sorting a collection would involve creating an anonymous inner class for the Comparator used in the sort:
     @Test
     public void givenPreLambda_whenSortingEntitiesByName_thenCorrectlySorted() {
         List<Human> humans = Lists.newArrayList(
