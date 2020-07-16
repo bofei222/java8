@@ -1,4 +1,4 @@
-package com.bf.proxy.dynamic;
+package com.bf.proxy.dynamic.b;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

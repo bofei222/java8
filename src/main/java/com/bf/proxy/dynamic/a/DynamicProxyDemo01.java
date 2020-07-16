@@ -1,4 +1,4 @@
-package com.bf.proxy.dynamic;
+package com.bf.proxy.dynamic.a;
 
 
 import java.lang.reflect.InvocationHandler;
@@ -14,10 +14,17 @@ public class DynamicProxyDemo01 {
         RealSubject realSubject = new RealSubject();    //1.创建委托对象
         ProxyHandler handler = new ProxyHandler(realSubject);   //2.创建调用处理器对象
         System.out.println("realSubject " + realSubject);
+
+        // 为什么 可以强转， 因为 动态代理类 实现了 第二个参数类型的 的接口
         Subject proxySubject = (Subject) Proxy.newProxyInstance(RealSubject.class.getClassLoader(),
                 RealSubject.class.getInterfaces(), handler);    //3.动态生成代理对象
+
         System.out.println("proxySubject " + proxySubject);
+        System.out.println("proxySubject " + proxySubject.getClass().getName());
+
+
         proxySubject.request(); //4.通过代理对象调用方法
+        proxySubject.request2(); //4.通过代理对象调用方法
     }
 }
 
@@ -26,6 +33,7 @@ public class DynamicProxyDemo01 {
  */
 interface Subject{
     void request();
+    void request2();
 }
 
 /**

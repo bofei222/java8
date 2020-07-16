@@ -7,7 +7,7 @@ package com.bf.proxy.staticProxy;
 public class ProxyDemo {
     public static void main(String args[]){
         RealSubject subject = new RealSubject();
-        Proxy p = new Proxy(subject);
+        Subject p = new Proxy(subject); // 1. 代理对象可以伪装成 目标对象的 同一个 类型
         p.request();
     }
 }
@@ -22,6 +22,7 @@ class RealSubject implements Subject {
     }
 }
 
+// 1.为什么代理类要实现 相同的接口
 class Proxy implements Subject {
     private Subject subject;
     public Proxy(Subject subject){
