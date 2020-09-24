@@ -1,12 +1,10 @@
-package com.bf.util;
+package com.bf.util.date;
 
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.util.StringUtils;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 

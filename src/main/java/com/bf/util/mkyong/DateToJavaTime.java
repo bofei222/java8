@@ -14,7 +14,7 @@ public class DateToJavaTime {
 
         //Asia/Kuala_Lumpur +8
         ZoneId defaultZoneId = ZoneId.systemDefault();
-        System.out.println("System Default TimeZone : " + defaultZoneId);
+//        System.out.println("System Default TimeZone : " + defaultZoneId);
 
         //toString() append +8 automatically.
         Date date = new Date();
@@ -26,17 +26,17 @@ public class DateToJavaTime {
 
         //2. Instant + system default time zone + toLocalDate() = LocalDate
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-        System.out.println("localDate : " + localDate);
+//        System.out.println("localDate : " + localDate);
         LocalDate localDate1 = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         System.out.println(localDate1);
 
-        //3. Instant + system default time zone + toLocalDateTime() = LocalDateTime
+    /*    //3. Instant + system default time zone + toLocalDateTime() = LocalDateTime
         LocalDateTime localDateTime = instant.atZone(defaultZoneId).toLocalDateTime();
         System.out.println("localDateTime : " + localDateTime);
 
         //4. Instant + system default time zone = ZonedDateTime
         ZonedDateTime zonedDateTime = instant.atZone(defaultZoneId);
-        System.out.println("zonedDateTime : " + zonedDateTime);
+        System.out.println("zonedDateTime : " + zonedDateTime);*/
 
     }
 

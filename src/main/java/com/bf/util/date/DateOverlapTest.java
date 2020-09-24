@@ -1,4 +1,4 @@
-package com.bf.util;
+package com.bf.util.date;
 
 import java.util.Date;
 
