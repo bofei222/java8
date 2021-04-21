@@ -1,7 +1,5 @@
 package com.bf.innertest;
 
-import com.bf.inner.Outter;
-
 /**
  * @description:
  * @author: bofei
@@ -9,6 +7,7 @@ import com.bf.inner.Outter;
  **/
 public class Test {
     public static void main(String[] args) {
-        Outter.Inner1 inner1 = new Outter().new Inner1();
+        Biology biology = new Dog();
+        biology.eat();
     }
 }
