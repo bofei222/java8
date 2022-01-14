@@ -1,0 +1,98 @@
+{
+	"smTranRuleConfigureSubId": 62,
+	"point_index": [{
+			"timePoint": 1,
+			"indexCode": "P0000035"
+		},
+		{
+			"timePoint": 1,
+			"indexCode": "P0000036"
+		},
+		{
+			"timePoint": 2,
+			"indexCode": "P0000035"
+		}, {
+			"timePoint": 2,
+			"indexCode": "P0000036"
+		}
+	]
+}
+
+{
+	"smTranRuleConfigureSubId": 62,
+	"point_index": [{
+			"timePoint": 1,
+			"indexCode": "P0000035",
+			"indexVal": "111"
+		},
+		{
+			"timePoint": 1,
+			"indexCode": "P0000036"
+			"indexVal": "222"
+		},
+		{
+			"timePoint": 2,
+			"indexCode": "P0000035"
+			"indexVal": "333"
+		}, {
+			"timePoint": 2,
+			"indexCode": "P0000036"
+			"indexVal": "444"
+		}
+	]
+}
+
+[{
+            "timePoint": 0:00,
+			"indexCode": "P0000035",
+			"indexName": "交易中心发布的机组96点状态",
+			"indexVal": "111"
+		},
+		{
+			"timePoint": 0:00,
+			"indexCode": "P0000036"
+			"indexName": "经确认的机组96点状态"
+			"indexVal": "222"
+		},
+		{
+			"timePoint": 0:15,
+			"indexCode": "P0000035"
+			"indexName": "交易中心发布的机组96点状态"
+			"indexVal": "333"
+		}, {
+			"timePoint": 0:15,
+			"indexCode": "P0000036"
+			"indexName": "经确认的机组96点状态"
+			"indexVal": "444"
+		}
+]
+--------------------------B
+[{
+			"timePoint": 0:00,
+			"P0000035": "111",
+			"P0000036": "222",
+		},
+		{
+			"timePoint": 0:15,
+			"P0000035": "333",
+            "P0000036": "444",
+		}
+
+]
+--------------------------C
+[
+["timePoint","P0000035","P0000036"],
+["1","111","222"],
+["2","333","444"],
+]
+----------------------- D indexCode变成了维度、行数
+[{
+    "indexCode":"P0000035",
+    "0:00":"111",
+    "0:15":"333"
+},{
+      "indexCode":"P0000036",
+      "0:00":"222",
+      "0:15":"444"
+  }
+  ]
