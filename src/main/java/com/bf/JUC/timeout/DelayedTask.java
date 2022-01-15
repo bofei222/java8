@@ -5,23 +5,24 @@ package com.bf.JUC.timeout;
  * @author: bofei
  * @date: 2022-01-12 11:47
  **/
-public class DelayedTask {
+public class DelayedTask implements Runnable{
+    @Override
+    public void run() {
+        doTask();
+    }
 
-    public static int doTask() {
+    public synchronized void doTask() {
         try {
-//            TimeUnit.MILLISECONDS.sleep(50);
-//            for (int i = 0; i < 1000000; i++) {
-//                System.out.println();
-//                if (Thread.currentThread().isInterrupted()) {
-//                    Thread.sleep(1);
-//                }
-//            }
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+
+            for (int i = 0; i < 100000000; i++) {
+                wait(1);
+//                            TimeUnit.MILLISECONDS.sleep(50);
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("task end");
-        return 1;
     }
 
 }

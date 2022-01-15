@@ -18,15 +18,15 @@ public class Server {
         while (true) {
             Socket socket = server.accept();
 
-            while (true) {
-                // 输入流
-                DataInputStream dis = new DataInputStream(socket.getInputStream());
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                String msg = dis.readUTF();
-                // 输出流
-                dos.writeUTF("服务器-->" + msg);
-                dos.flush();
-            }
+//            while (true) {
+//                // 输入流
+//                DataInputStream dis = new DataInputStream(socket.getInputStream());
+//                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+//                String msg = dis.readUTF();
+//                // 输出流
+//                dos.writeUTF("服务器-->" + msg);
+//                dos.flush();
+//            }
         }
     }
 
@@ -34,6 +34,7 @@ public class Server {
         private DataInputStream dis;
         private DataOutputStream dos;
         private boolean isRunning = true;
+//        private Socket socket;
 
         public MyChannel(Socket socket) {
             try {
@@ -47,7 +48,16 @@ public class Server {
 
         @Override
         public void run() {
-
+            try {
+                while (true) {
+                    String msg = dis.readUTF();
+                    // 输出流
+                    dos.writeUTF("服务器-->" + msg);
+                    dos.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

@@ -8,10 +8,10 @@ package com.bf.JUC.timeout;
 public class JoinDemo {
 
     public static void main(String[] args) {
-        Thread t = new Thread(DelayedTask::doTask);
+        Thread t = new Thread(new DelayedTask());
         t.start();
         try {
-            t.join(20); // join 不会抛出超时异常
+            t.join(3000); // join 不会抛出超时异常
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -18,6 +18,13 @@ public class MultiServer {
             while (true) { // 一个accept一个客户端
                 // 接收客户端连接 阻塞式
                 Socket socket = server.accept();
+
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 //浏览器也是一个基于tcp的客户端
                 System.out.println("一个客户端建立连接");
                 // 发送数据

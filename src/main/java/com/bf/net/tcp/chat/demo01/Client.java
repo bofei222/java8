@@ -14,7 +14,7 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) throws Exception{
 
-        Socket client = new Socket("localhost", 3131);
+        Socket client = new Socket("localhost", 9999);
         // 控制台输入流
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         DataOutputStream dos = new DataOutputStream(client.getOutputStream());
