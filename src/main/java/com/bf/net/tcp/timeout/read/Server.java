@@ -1,7 +1,6 @@
-package com.bf.net.tcp.chat.demo01;
+package com.bf.net.tcp.timeout.read;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,17 +17,20 @@ public class Server {
         ServerSocket server = new ServerSocket(9999);
         while (true) {
             Socket client = server.accept();
-
+            client.setSoTimeout(20);
             // 输入流
             DataInputStream dis = new DataInputStream(client.getInputStream());
             String msg = dis.readUTF();
-
-
-            // 输出流
-            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
-            dos.writeUTF("服务器-->" + msg);
-            dos.flush();
         }
+
+//
+//
+//
+//            // 输出流
+//            DataOutputStream dos = new DataOutputStream(client.getOutputStream());
+//            dos.writeUTF("服务器-->" + msg);
+//            dos.flush();
+//        }
 
 
 

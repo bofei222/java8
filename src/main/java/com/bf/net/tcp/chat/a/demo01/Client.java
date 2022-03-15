@@ -25,7 +25,7 @@ public class Client {
 //        while (true) {
 //            String info = console.readLine();
 //            // 输出流
-        dos.writeUTF( "F1056,XB_041,SCADATransLVBrakerClose,0,FBCh1gEFeo,2021-10-19_12:51:54.071,da63");
+        dos.writeUTF( "F1110,GF_001,DO1247,0,FBCh1gEFeo,2022-10-19_12:51:54.071,da63");
             dos.flush();
 //            // 输入流
 //            String msg = dis.readUTF();

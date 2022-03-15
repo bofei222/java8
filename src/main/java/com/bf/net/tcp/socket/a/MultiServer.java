@@ -27,9 +27,7 @@ public class MultiServer {
             bw.write(s);
             bw.newLine();
             bw.flush();
-            while (true) {
 
-            }
         }
 
     }

@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 /**
  * @author bofei
@@ -14,7 +16,12 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) throws Exception{
 
-        Socket client = new Socket("localhost", 9999);
+        Socket client = new Socket();
+        SocketAddress socketAddress = new InetSocketAddress("127.0.0.1", 9999);
+        client.bind(socketAddress);
+        client.connect(socketAddress,2000);
+
+
         // 控制台输入流
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         DataOutputStream dos = new DataOutputStream(client.getOutputStream());

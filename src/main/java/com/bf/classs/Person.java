@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * @author: bofei
  * @date: 2019-12-04 19:19
  **/
-public class Person {
+ class Person {
     private String firstName;
     private String lastName;
     private LocalDate dob;

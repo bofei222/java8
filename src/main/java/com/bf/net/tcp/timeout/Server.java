@@ -1,4 +1,4 @@
-package com.bf.net.tcp.chat.demo01;
+package com.bf.net.tcp.timeout;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
