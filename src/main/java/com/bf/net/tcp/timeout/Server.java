@@ -29,9 +29,5 @@ public class Server {
             dos.writeUTF("服务器-->" + msg);
             dos.flush();
         }
-
-
-
-
     }
 }

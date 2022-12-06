@@ -15,8 +15,10 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         ServerSocket server = new ServerSocket(9999);
-        Socket socket = server.accept();
+        server.setSoTimeout(100);
 
+        Socket socket = server.accept();
+        socket.setSoTimeout(11);
         while (true) {
             // 输入流
             DataInputStream dis = new DataInputStream(socket.getInputStream());

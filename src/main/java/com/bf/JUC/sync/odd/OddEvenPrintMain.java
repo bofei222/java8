@@ -1,4 +1,4 @@
-package com.bf.JUC.odd;
+package com.bf.JUC.sync.odd;
 
 /**
  * @description:

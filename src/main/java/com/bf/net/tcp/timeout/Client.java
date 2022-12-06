@@ -16,8 +16,10 @@ public class Client {
         long t1 = 0;
         try {
             t1 = System.currentTimeMillis();
-            socket.connect(new InetSocketAddress("10.255.10.140", 9999));
+            socket.connect(new InetSocketAddress("127.0.0.1", 9999));
 //            socket.setSoTimeout(1);
+//            InputStream inputStream = socket.getInputStream();
+           Thread.sleep(100000);
         } catch (IOException e) {
             long t2 = System.currentTimeMillis();
             e.printStackTrace();
