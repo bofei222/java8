@@ -21,6 +21,7 @@ public class Send implements  Runnable{
     public Send(Socket socket) {
         this();
         try {
+
             this.dos =  new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
 //            e.printStackTrace();
@@ -39,6 +40,11 @@ public class Send implements  Runnable{
         return "";
     }
     public void send() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         String msg = getMsgFromConsole();
         if (null != msg && !"".equals(msg)) {
             try {

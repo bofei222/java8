@@ -15,7 +15,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         ServerSocket server = new ServerSocket(9999);
-        server.setSoTimeout(100);
+//        server.setSoTimeout(100);
 
         Socket socket = server.accept();
         socket.setSoTimeout(11);

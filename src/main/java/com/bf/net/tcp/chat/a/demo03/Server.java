@@ -17,26 +17,27 @@ public class Server {
         ServerSocket server = new ServerSocket(9999);
         while (true) {
             Socket socket = server.accept();
-
+//            new MyChannel(socket);
 //            while (true) {
-//                // 输入流
-//                DataInputStream dis = new DataInputStream(socket.getInputStream());
-//                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-//                String msg = dis.readUTF();
-//                // 输出流
-//                dos.writeUTF("服务器-->" + msg);
-//                dos.flush();
+                // 输入流
+                DataInputStream dis = new DataInputStream(socket.getInputStream());
+                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                String msg = dis.readUTF();
+                // 输出流
+                dos.writeUTF("服务器-->" + msg);
+                dos.flush();
 //            }
         }
     }
 
-    class MyChannel implements Runnable {
+    static class MyChannel implements Runnable {
         private DataInputStream dis;
         private DataOutputStream dos;
         private boolean isRunning = true;
-//        private Socket socket;
+        private Socket socket;
 
         public MyChannel(Socket socket) {
+            this.socket = socket;
             try {
                 dis = new DataInputStream(socket.getInputStream());
                 dos = new DataOutputStream(socket.getOutputStream());

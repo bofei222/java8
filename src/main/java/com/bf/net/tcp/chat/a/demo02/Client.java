@@ -17,7 +17,14 @@ public class Client {
         // 输入流和输入流在同一个线程内 应该独立处理
 
         Socket socket = new Socket("127.0.0.1", 9999);
-        new Thread(new Send(socket)).start();// 一条路径
+        Thread thread = new Thread(new Send(socket));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        thread.start();// 一条路径
+        thread.interrupt();
         new Thread(new Receive(socket)).start();
 
     }
