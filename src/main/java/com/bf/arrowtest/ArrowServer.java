@@ -23,10 +23,10 @@ import java.util.Iterator;
 public class ArrowServer {
     public static void main(String[] args) {
         Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
-        try (BufferAllocator allocator = new RootAllocator()){
+        try (BufferAllocator allocator = new RootAllocator()) {
             // Server
-            try(final CookbookProducer producer = new CookbookProducer(allocator, location);
-                final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
+            try (final CookbookProducer producer = new CookbookProducer(allocator, location);
+                 final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
                 try {
                     flightServer.start();
                     System.out.println("S1: Server (Location): Listening on port " + flightServer.getPort());
@@ -42,8 +42,8 @@ public class ArrowServer {
                     Schema schema = new Schema(Arrays.asList(
                             new Field("name", FieldType.nullable(new ArrowType.Utf8()), null)));
 
-                    try(VectorSchemaRoot vectorSchemaRoot = VectorSchemaRoot.create(schema, allocator);
-                        VarCharVector varCharVector = (VarCharVector) vectorSchemaRoot.getVector("name")) {
+                    try (VectorSchemaRoot vectorSchemaRoot = VectorSchemaRoot.create(schema, allocator);
+                         VarCharVector varCharVector = (VarCharVector) vectorSchemaRoot.getVector("name")) {
                         varCharVector.allocateNew(3);
                         varCharVector.set(0, "Ronald".getBytes());
                         varCharVector.set(1, "David".getBytes());
@@ -69,7 +69,7 @@ public class ArrowServer {
                     System.out.println("C3: Client (Get Metadata): " + flightInfo);
 
                     // Get data information
-                    try(FlightStream flightStream = flightClient.getStream(flightInfo.getEndpoints().get(0).getTicket())) {
+                    try (FlightStream flightStream = flightClient.getStream(flightInfo.getEndpoints().get(0).getTicket())) {
                         int batch = 0;
                         try (VectorSchemaRoot vectorSchemaRootReceived = flightStream.getRoot()) {
                             System.out.println("C4: Client (Get Stream):");
