@@ -23,9 +23,9 @@ import java.util.Map;
 /**
  * @description:
  * @author: bofei
- * @date: 2024-09-03 17:51
+ * @date: 2024-10-10 11:45
  **/
-public class ArrowServerWriteMap {
+public class ArrowServerWriteMapWhile {
     public static void main(String[] args) {
 
         Location location = Location.forGrpcInsecure("10.162.4.45", 8815);

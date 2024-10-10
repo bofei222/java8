@@ -16,8 +16,7 @@ public class ArrowServerRead {
         Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
             // Server
-            try (final CookbookProducer producer = new CookbookProducer(allocator, location);
-                 final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
+            try (final CookbookProducer producer = new CookbookProducer(allocator, location);) {
               /*  try {
                     flightServer.start();
                     System.out.println("S1: Server (Location): Listening on port " + flightServer.getPort());
@@ -38,7 +37,7 @@ public class ArrowServerRead {
 
                     // Get data information memory_BFFC_0001_schema001
                     //   file_realtime_001_2024-09-26
-                    Thread.sleep(1000);
+                    Thread.sleep(1000); // memory_realtime_001_schema888   memory_realtime_001_schema111
                     try (FlightStream flightStream = flightClient.getStream(new Ticket("memory_realtime_001_schema888".getBytes()))) {
                         int batch = 0;
                         try (VectorSchemaRoot vectorSchemaRootReceived = flightStream.getRoot()) {
@@ -71,8 +70,9 @@ public class ArrowServerRead {
                     flightInfos.forEach(t -> System.out.println(t));
                     System.out.println("C7: Client (List Flights Info): After delete - No records");
 */
+                    Thread.sleep(100); // memory_realtime_001_schema888   memory_realtime_001_schema111
                     // Server shut down
-                    flightServer.shutdown();
+
                     System.out.println("C8: Server shut down successfully");
                 }
 

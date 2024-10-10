@@ -61,25 +61,18 @@ public class ArrowServer {
 
 
                         // 为每个字段分配内存
-                        nameVector.allocateNew(2);
-                        ageVector.allocateNew(3);
-                        emailVector.allocateNew(3);
+                        nameVector.allocateNew(1);
+                        ageVector.allocateNew(1);
+                        emailVector.allocateNew(1);
 
 
                         // 设置第一个批次的数据
                         nameVector.set(0, "Ronald".getBytes());
-                        ageVector.set(0, (int) (System.currentTimeMillis()));
+                        ageVector.set(0, (int) (System.currentTimeMillis()/1000));
                         emailVector.set(0, "ronald@example.com".getBytes());
 
-                        nameVector.set(1, "David".getBytes());
-                        ageVector.set(1, (int) (System.currentTimeMillis()));
-                        emailVector.set(1, "david@example.com".getBytes());
 
-                        nameVector.set(2, "Francisco".getBytes());
-                        ageVector.set(2,(int) (System.currentTimeMillis()));
-                        emailVector.set(2, "francisco@example.com".getBytes());
-
-                        vectorSchemaRoot.setRowCount(3);
+                        vectorSchemaRoot.setRowCount(1);
                         listener.putNext();
 
 
@@ -90,23 +83,24 @@ public class ArrowServer {
 
 
                         // 设置第二个批次的数据
-                        nameVector.set(0, "Ronald".getBytes());
-                        ageVector.set(0, (int) (System.currentTimeMillis()));
+                        nameVector.set(0, "Ronald2".getBytes());
+                        ageVector.set(0, (int) (System.currentTimeMillis()/1000));
                         emailVector.set(0, "ronald@example.com".getBytes());
 
-                        nameVector.set(1, "David".getBytes());
-                        ageVector.set(1, (int) (System.currentTimeMillis()));
-                        emailVector.set(1, "david@example.com".getBytes());
 
-                        nameVector.set(2, "Francisco".getBytes());
-                        ageVector.set(2,(int) (System.currentTimeMillis()));
-                        emailVector.set(2, "francisco@example.com".getBytes());
-
-                        vectorSchemaRoot.setRowCount(3);
-
-
+                        vectorSchemaRoot.setRowCount(1);
                         listener.putNext();
-//                        listener.completed();
+
+                        // 设置第3个批次的数据
+                        nameVector.set(0, "Ronald3".getBytes());
+                        ageVector.set(0, (int) (System.currentTimeMillis()/1000));
+                        emailVector.set(0, "ronald@example.com".getBytes());
+
+
+                        vectorSchemaRoot.setRowCount(1);
+                        listener.putNext();
+
+                        listener.completed();
 //                        listener.getResult();
                         System.out.println("C2: Client (Populate Data): Wrote 2 batches with 3 rows each");
                     }
