@@ -3,6 +3,7 @@ package com.bf.arrowtest;
 import org.apache.arrow.flight.*;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
+import org.apache.arrow.vector.IntVector;
 import org.apache.arrow.vector.VarCharVector;
 import org.apache.arrow.vector.VectorSchemaRoot;
 import org.apache.arrow.vector.types.pojo.ArrowType;
@@ -10,10 +11,7 @@ import org.apache.arrow.vector.types.pojo.Field;
 import org.apache.arrow.vector.types.pojo.FieldType;
 import org.apache.arrow.vector.types.pojo.Schema;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * @description:
@@ -22,54 +20,105 @@ import java.util.Iterator;
  **/
 public class ArrowServer {
     public static void main(String[] args) {
-        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
+//        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
+        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
             // Server
             try (final CookbookProducer producer = new CookbookProducer(allocator, location);
                  final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
-                try {
+              /*  try {
                     flightServer.start();
                     System.out.println("S1: Server (Location): Listening on port " + flightServer.getPort());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                }
-
+                }*/
                 // Client
                 try (FlightClient flightClient = FlightClient.builder(allocator, location).build()) {
                     System.out.println("C1: Client (Location): Connected to " + location.getUri());
 
-                    // Populate data
+
+
+                    // 定义 Schema，增加多个字段，如 name（字符串），age（整数），email（字符串）
                     Schema schema = new Schema(Arrays.asList(
-                            new Field("name", FieldType.nullable(new ArrowType.Utf8()), null)));
+                            new Field("name", FieldType.nullable(new ArrowType.Utf8()), null),
+                            new Field("timestamp", FieldType.nullable(new ArrowType.Int(32, true)), null),
+                            new Field("email", FieldType.nullable(new ArrowType.Utf8()), null)
+                    ));
 
                     try (VectorSchemaRoot vectorSchemaRoot = VectorSchemaRoot.create(schema, allocator);
-                         VarCharVector varCharVector = (VarCharVector) vectorSchemaRoot.getVector("name")) {
-                        varCharVector.allocateNew(3);
-                        varCharVector.set(0, "Ronald".getBytes());
-                        varCharVector.set(1, "David".getBytes());
-                        varCharVector.set(2, "Francisco".getBytes());
-                        vectorSchemaRoot.setRowCount(3);
+                         ) {
+
+
                         FlightClient.ClientStreamListener listener = flightClient.startPut(
-                                FlightDescriptor.path("profiles"),
+                                FlightDescriptor.path("file_realtime_001_schema111"),
                                 vectorSchemaRoot, new AsyncPutListener());
+
+
+
+                        VarCharVector nameVector = (VarCharVector) vectorSchemaRoot.getVector("name");
+                        IntVector ageVector = (IntVector) vectorSchemaRoot.getVector("timestamp");
+                        VarCharVector emailVector = (VarCharVector) vectorSchemaRoot.getVector("email");
+
+
+                        // 为每个字段分配内存
+                        nameVector.allocateNew(2);
+                        ageVector.allocateNew(3);
+                        emailVector.allocateNew(3);
+
+
+                        // 设置第一个批次的数据
+                        nameVector.set(0, "Ronald".getBytes());
+                        ageVector.set(0, (int) (System.currentTimeMillis()));
+                        emailVector.set(0, "ronald@example.com".getBytes());
+
+                        nameVector.set(1, "David".getBytes());
+                        ageVector.set(1, (int) (System.currentTimeMillis()));
+                        emailVector.set(1, "david@example.com".getBytes());
+
+                        nameVector.set(2, "Francisco".getBytes());
+                        ageVector.set(2,(int) (System.currentTimeMillis()));
+                        emailVector.set(2, "francisco@example.com".getBytes());
+
+                        vectorSchemaRoot.setRowCount(3);
                         listener.putNext();
 
-                        varCharVector.set(0, "Manuel".getBytes());
-                        varCharVector.set(1, "Felipe".getBytes());
-                        varCharVector.set(2, "JJ".getBytes());
+
+////                        // 为每个字段分配内存
+//                        nameVector.allocateNew(3);
+//                        ageVector.allocateNew(3);
+//                        emailVector.allocateNew(3);
+
+
+                        // 设置第二个批次的数据
+                        nameVector.set(0, "Ronald".getBytes());
+                        ageVector.set(0, (int) (System.currentTimeMillis()));
+                        emailVector.set(0, "ronald@example.com".getBytes());
+
+                        nameVector.set(1, "David".getBytes());
+                        ageVector.set(1, (int) (System.currentTimeMillis()));
+                        emailVector.set(1, "david@example.com".getBytes());
+
+                        nameVector.set(2, "Francisco".getBytes());
+                        ageVector.set(2,(int) (System.currentTimeMillis()));
+                        emailVector.set(2, "francisco@example.com".getBytes());
+
                         vectorSchemaRoot.setRowCount(3);
+
+
                         listener.putNext();
-                        listener.completed();
-                        listener.getResult();
+//                        listener.completed();
+//                        listener.getResult();
                         System.out.println("C2: Client (Populate Data): Wrote 2 batches with 3 rows each");
                     }
 
                     // Get metadata information
-                    FlightInfo flightInfo = flightClient.getInfo(FlightDescriptor.path("profiles"));
-                    System.out.println("C3: Client (Get Metadata): " + flightInfo);
+//                    FlightInfo flightInfo = flightClient.getInfo(FlightDescriptor.path("file_BFFC_001_schema001"));
+//                    System.out.println("C3: Client (Get Metadata): " + flightInfo);
 
-                    // Get data information
-                    try (FlightStream flightStream = flightClient.getStream(flightInfo.getEndpoints().get(0).getTicket())) {
+                    // Get data information memory_BFFC_0001_schema001
+                    //   file_realtime_001_2024-09-26
+                    Thread.sleep(1000);
+                    try (FlightStream flightStream = flightClient.getStream(new Ticket("memory_realtime_001_schema111".getBytes()))) {
                         int batch = 0;
                         try (VectorSchemaRoot vectorSchemaRootReceived = flightStream.getRoot()) {
                             System.out.println("C4: Client (Get Stream):");
@@ -82,8 +131,7 @@ public class ArrowServer {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    // Get all metadata information
+                    /*// Get all metadata information
                     Iterable<FlightInfo> flightInfosBefore = flightClient.listFlights(Criteria.ALL);
                     System.out.print("C5: Client (List Flights Info): ");
                     flightInfosBefore.forEach(t -> System.out.println(t));
@@ -101,11 +149,13 @@ public class ArrowServer {
                     Iterable<FlightInfo> flightInfos = flightClient.listFlights(Criteria.ALL);
                     flightInfos.forEach(t -> System.out.println(t));
                     System.out.println("C7: Client (List Flights Info): After delete - No records");
-
+*/
                     // Server shut down
                     flightServer.shutdown();
                     System.out.println("C8: Server shut down successfully");
                 }
+
+//                Thread.sleep(900000000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
