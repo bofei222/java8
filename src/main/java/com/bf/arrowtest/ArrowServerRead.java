@@ -13,7 +13,7 @@ import org.apache.arrow.vector.VectorSchemaRoot;
 public class ArrowServerRead {
     public static void main(String[] args) {
 //        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
-        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
+        Location location = Location.forGrpcInsecure("10.19.8.243", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
             // Server
             try (final CookbookProducer producer = new CookbookProducer(allocator, location);) {

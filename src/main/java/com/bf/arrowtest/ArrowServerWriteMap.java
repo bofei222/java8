@@ -65,7 +65,7 @@ public class ArrowServerWriteMap {
                     timestampVector.allocateNew(rowCount);
 
                     // 每秒生成新的 Map 数据并发送
-                    for (int i = 0; i < 2; i++) {  // 假设我们只发送 10 次，循环次数可根据需求修改
+                    for (int i = 0; i < 3; i++) {  // 假设我们只发送 10 次，循环次数可根据需求修改
                         Map<String, Object> mapData = new HashMap<>();
                         mapData.put("name", "User_" + i);  // 动态生成用户名称
                         mapData.put("age", 20 + i);        // 动态生成年龄

@@ -6,10 +6,7 @@ import org.apache.arrow.flight.FlightDescriptor;
 import org.apache.arrow.flight.Location;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
-import org.apache.arrow.vector.BigIntVector;
-import org.apache.arrow.vector.IntVector;
-import org.apache.arrow.vector.VarCharVector;
-import org.apache.arrow.vector.VectorSchemaRoot;
+import org.apache.arrow.vector.*;
 import org.apache.arrow.vector.types.pojo.ArrowType;
 import org.apache.arrow.vector.types.pojo.Field;
 import org.apache.arrow.vector.types.pojo.FieldType;
@@ -20,27 +17,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @description:
- * @author: bofei
- * @date: 2024-10-10 11:45
- **/
 public class ArrowServerWriteMapWhile {
     public static void main(String[] args) {
 
-        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
+        Location location = Location.forGrpcInsecure("10.19.8.243", 8815);
+//        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
 
             // Client
             try (FlightClient flightClient = FlightClient.builder(allocator, location).build()) {
                 System.out.println("C1: Client (Location): Connected to " + location.getUri());
 
-                // 动态生成 Schema 的代码只需要做一次，因为我们假设字段结构不变
-                List<Field> fields = new ArrayList<>();
-                fields.add(new Field("name", FieldType.nullable(new ArrowType.Utf8()), null));
-                fields.add(new Field("age", FieldType.nullable(new ArrowType.Int(32, true)), null));
-                fields.add(new Field("timestamp", FieldType.nullable(new ArrowType.Int(64, true)), null));
+                // 动态生成的 Map 数据（字段名和类型是动态的）
+                Map<String, Object> mapData = new HashMap<>();
+                mapData.put("name", "User_0");  // 动态生成用户名称
+                mapData.put("age", 20);        // 动态生成年龄
+                mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
 
+                // 根据 mapData 动态生成 Schema
+                List<Field> fields = new ArrayList<>();
+                for (Map.Entry<String, Object> entry : mapData.entrySet()) {
+                    Field field = createFieldFromEntry(entry);
+                    fields.add(field);
+                }
                 Schema schema = new Schema(fields);
 
                 // 创建 VectorSchemaRoot
@@ -54,27 +53,16 @@ public class ArrowServerWriteMapWhile {
                     // 设置行数为1，因为我们假设每次发送一行数据
                     int rowCount = 1;
 
-                    // 分配向量（每个字段对应一个列向量）
-                    VarCharVector nameVector = (VarCharVector) vectorSchemaRoot.getVector("name");
-                    IntVector ageVector = (IntVector) vectorSchemaRoot.getVector("age");
-                    BigIntVector timestampVector = (BigIntVector) vectorSchemaRoot.getVector("timestamp");
+                    // 分配向量内存并更新数据
+                    for (int i = 0; i < 2; i++) {  // 假设我们只发送 2 次，循环次数可根据需求修改
 
-                    // 分配内存（一次性分配足够存储一行数据的内存）
-                    nameVector.allocateNew(rowCount);
-                    ageVector.allocateNew(rowCount);
-                    timestampVector.allocateNew(rowCount);
-
-                    // 每秒生成新的 Map 数据并发送
-                    for (int i = 0; i < 2; i++) {  // 假设我们只发送 10 次，循环次数可根据需求修改
-                        Map<String, Object> mapData = new HashMap<>();
+                        // 每次生成新的 map 数据
                         mapData.put("name", "User_" + i);  // 动态生成用户名称
                         mapData.put("age", 20 + i);        // 动态生成年龄
-                        mapData.put("timestamp", System.currentTimeMillis()/1000);  // 当前时间戳
+                        mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
 
-                        // 更新向量中的数据
-                        nameVector.set(0, mapData.get("name").toString().getBytes());
-                        ageVector.set(0, (Integer) mapData.get("age"));
-                        timestampVector.set(0, (Long) mapData.get("timestamp"));
+                        // 动态填充 Vector
+                        updateVectorWithMapData(vectorSchemaRoot, mapData, rowCount);
 
                         // 设置行数
                         vectorSchemaRoot.setRowCount(rowCount);
@@ -84,11 +72,11 @@ public class ArrowServerWriteMapWhile {
                         System.out.println("Put data for User_" + i);
 
                         // 等待1秒钟再发送下一批数据
-                        Thread.sleep(1000);
+//                        Thread.sleep(1000);
                     }
 
                     // 完成数据发送
-                    listener.completed();
+//                    listener.completed();
                     System.out.println("Data sending completed.");
 
                 } catch (Exception e) {
@@ -99,6 +87,42 @@ public class ArrowServerWriteMapWhile {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    // 根据 Map 中的键值对动态创建 Field
+    private static Field createFieldFromEntry(Map.Entry<String, Object> entry) {
+        String key = entry.getKey();
+        Object value = entry.getValue();
+
+        if (value instanceof Integer) {
+            return new Field(key, FieldType.nullable(new ArrowType.Int(32, true)), null);
+        } else if (value instanceof Long) {
+            return new Field(key, FieldType.nullable(new ArrowType.Int(64, true)), null);
+        } else if (value instanceof String) {
+            return new Field(key, FieldType.nullable(new ArrowType.Utf8()), null);
+        } else {
+            throw new IllegalArgumentException("Unsupported data type: " + value.getClass());
+        }
+    }
+
+    // 根据 Map 数据更新对应的向量
+    private static void updateVectorWithMapData(VectorSchemaRoot vectorSchemaRoot, Map<String, Object> mapData, int rowCount) {
+        for (Map.Entry<String, Object> entry : mapData.entrySet()) {
+            String fieldName = entry.getKey();
+            Object value = entry.getValue();
+            FieldVector vector = vectorSchemaRoot.getVector(fieldName);
+
+            if (vector instanceof IntVector) {
+                ((IntVector) vector).allocateNew(rowCount);
+                ((IntVector) vector).set(0, (Integer) value);
+            } else if (vector instanceof BigIntVector) {
+                ((BigIntVector) vector).allocateNew(rowCount);
+                ((BigIntVector) vector).set(0, (Long) value);
+            } else if (vector instanceof VarCharVector) {
+                ((VarCharVector) vector).allocateNew(rowCount);
+                ((VarCharVector) vector).set(0, value.toString().getBytes());
+            }
         }
     }
 }
