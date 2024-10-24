@@ -1,6 +1,9 @@
 package com.bf.arrowtest;
 
-import org.apache.arrow.flight.*;
+import org.apache.arrow.flight.FlightClient;
+import org.apache.arrow.flight.FlightStream;
+import org.apache.arrow.flight.Location;
+import org.apache.arrow.flight.Ticket;
 import org.apache.arrow.memory.BufferAllocator;
 import org.apache.arrow.memory.RootAllocator;
 import org.apache.arrow.vector.VectorSchemaRoot;
@@ -10,10 +13,10 @@ import org.apache.arrow.vector.VectorSchemaRoot;
  * @author: bofei
  * @date: 2024-09-03 17:51
  **/
-public class ArrowClientRead {
+public class ArrowClientReadDBService {
     public static void main(String[] args) {
 //        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
-        Location location = Location.forGrpcInsecure("127.0.0.1", 8815);
+        Location location = Location.forGrpcInsecure("10.19.8.243", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
             // Server
             try (final CookbookProducer producer = new CookbookProducer(allocator, location);) {
@@ -32,11 +35,13 @@ public class ArrowClientRead {
 
 
                     // Get metadata information
-                    FlightInfo flightInfo = flightClient.getInfo(FlightDescriptor.path("file_realtime_001_schema888"));
-                    System.out.println("C3: Client (Get Metadata): " + flightInfo);
+//                    FlightInfo flightInfo = flightClient.getInfo(FlightDescriptor.path("file_BFFC_001_schema001"));
+//                    System.out.println("C3: Client (Get Metadata): " + flightInfo);
 
-                    // Get data information
-                    try(FlightStream flightStream = flightClient.getStream(flightInfo.getEndpoints().get(0).getTicket())) {
+                    // Get data information memory_BFFC_0001_schema001
+                    //   file_realtime_001_2024-09-26
+                    Thread.sleep(1000); // memory_realtime_001_schema888   memory_realtime_001_schema111
+                    try (FlightStream flightStream = flightClient.getStream(new Ticket("memory_realtime_001_schema888".getBytes()))) {
                         int batch = 0;
                         try (VectorSchemaRoot vectorSchemaRootReceived = flightStream.getRoot()) {
                             System.out.println("C4: Client (Get Stream):");
@@ -49,7 +54,6 @@ public class ArrowClientRead {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     /*// Get all metadata information
                     Iterable<FlightInfo> flightInfosBefore = flightClient.listFlights(Criteria.ALL);
                     System.out.print("C5: Client (List Flights Info): ");

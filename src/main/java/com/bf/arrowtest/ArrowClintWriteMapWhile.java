@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ArrowServerWriteMapWhile {
+public class ArrowClintWriteMapWhile {
     public static void main(String[] args) {
 
-        Location location = Location.forGrpcInsecure("10.19.8.243", 8815);
+        Location location = Location.forGrpcInsecure("127.0.0.1", 8815);
 //        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
 
