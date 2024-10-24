@@ -10,7 +10,7 @@ import org.apache.arrow.vector.VectorSchemaRoot;
  * @author: bofei
  * @date: 2024-09-03 17:51
  **/
-public class ArrowServerRead {
+public class ArrowClientRead {
     public static void main(String[] args) {
 //        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
         Location location = Location.forGrpcInsecure("10.19.8.243", 8815);
