@@ -64,12 +64,18 @@ class CookbookProducer extends NoOpFlightProducer implements AutoCloseable {
             long rows = 0;
             VectorUnloader unloader;
             while (flightStream.next()) {
+                // a
+                long a = System.currentTimeMillis();
                 unloader = new VectorUnloader(flightStream.getRoot());
                 final ArrowRecordBatch arb = unloader.getRecordBatch();
                 batches.add(arb);
                 rows += flightStream.getRoot().getRowCount();
+                // b
+                //打印a~b的耗时
+                System.out.println("a~b: " + (System.currentTimeMillis() -a));
             }
             Dataset dataset = new Dataset(batches, flightStream.getSchema(), rows);
+            // if datasets中存在, 则追加batches
             datasets.put(flightStream.getDescriptor(), dataset);
             ackStream.onCompleted();
         };

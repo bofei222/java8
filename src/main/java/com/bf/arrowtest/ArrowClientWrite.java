@@ -30,43 +30,26 @@ public class ArrowClientWrite {
                         new Field("name", FieldType.nullable(new ArrowType.Utf8()), null)));
                 try (VectorSchemaRoot vectorSchemaRoot = VectorSchemaRoot.create(schema, allocator);
                      VarCharVector varCharVector = (VarCharVector) vectorSchemaRoot.getVector("name")) {
-                    varCharVector.allocateNew(3);
+                    varCharVector.allocateNew(1);
+
                     varCharVector.set(0, "Ronald".getBytes());
-                    varCharVector.set(1, "David".getBytes());
-                    varCharVector.set(2, "Francisco".getBytes());
-                    vectorSchemaRoot.setRowCount(3);
+                    vectorSchemaRoot.setRowCount(1);
+
                     FlightClient.ClientStreamListener listener = flightClient.startPut(
                             FlightDescriptor.path("profiles"),
                             vectorSchemaRoot, new AsyncPutListener());
                     listener.putNext();
+
                     varCharVector.set(0, "Manuel".getBytes());
-                    varCharVector.set(1, "Felipe".getBytes());
-                    varCharVector.set(2, "JJ".getBytes());
-                    vectorSchemaRoot.setRowCount(3);
+                    vectorSchemaRoot.setRowCount(1);
                     listener.putNext();
+
                     listener.completed();
                     listener.getResult();
                     System.out.println("C2: Client (Populate Data): Wrote 2 batches with 3 rows each");
                 }
 
-                // Get metadata information
-                FlightInfo flightInfo = flightClient.getInfo(FlightDescriptor.path("profiles"));
-                System.out.println("C3: Client (Get Metadata): " + flightInfo);
 
-                // Get data information
-                try (FlightStream flightStream = flightClient.getStream(flightInfo.getEndpoints().get(0).getTicket())) {
-                    int batch = 0;
-                    try (VectorSchemaRoot vectorSchemaRootReceived = flightStream.getRoot()) {
-                        System.out.println("C4: Client (Get Stream):");
-                        while (flightStream.next()) {
-                            batch++;
-                            System.out.println("Client Received batch #" + batch + ", Data:");
-                            System.out.print(vectorSchemaRootReceived.contentToTSVString());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         }
     }

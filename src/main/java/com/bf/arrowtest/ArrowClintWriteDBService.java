@@ -17,22 +17,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ArrowClintWriteDBServiceMapWhile {
+public class ArrowClintWriteDBService {
     public static void main(String[] args) {
 
-        Location location = Location.forGrpcInsecure("127.0.0.1", 33333);
-//        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
+        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
         try (BufferAllocator allocator = new RootAllocator()) {
-
-            // Client
             try (FlightClient flightClient = FlightClient.builder(allocator, location).build()) {
                 System.out.println("C1: Client (Location): Connected to " + location.getUri());
 
                 // 动态生成的 Map 数据（字段名和类型是动态的）
                 Map<String, Object> mapData = new HashMap<>();
                 mapData.put("name", "User_0");  // 动态生成用户名称
-                mapData.put("age", 20);        // 动态生成年龄
-                mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
+//                mapData.put("age", 20);        // 动态生成年龄
+//                mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
 
                 // 根据 mapData 动态生成 Schema
                 List<Field> fields = new ArrayList<>();
@@ -54,12 +51,12 @@ public class ArrowClintWriteDBServiceMapWhile {
                     int rowCount = 1;
 
                     // 分配向量内存并更新数据
-                    for (int i = 0; i < 2; i++) {  // 假设我们只发送 2 次，循环次数可根据需求修改
+                    for (int i = 0; i < 10; i++) {  // 假设我们只发送 2 次，循环次数可根据需求修改
 
                         // 每次生成新的 map 数据
                         mapData.put("name", "User_" + i);  // 动态生成用户名称
-                        mapData.put("age", 20 + i);        // 动态生成年龄
-                        mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
+//                        mapData.put("age", 20 + i);        // 动态生成年龄
+//                        mapData.put("timestamp", System.currentTimeMillis() / 1000);  // 当前时间戳
 
                         // 动态填充 Vector
                         updateVectorWithMapData(vectorSchemaRoot, mapData, rowCount);
@@ -76,7 +73,7 @@ public class ArrowClintWriteDBServiceMapWhile {
                     }
 
                     // 完成数据发送
-//                    listener.completed();
+                    listener.completed();
                     System.out.println("Data sending completed.");
 
                 } catch (Exception e) {
