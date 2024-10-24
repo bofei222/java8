@@ -14,12 +14,11 @@ import java.io.IOException;
  **/
 public class ArrowServer {
     public static void main(String[] args) {
-//        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
-        Location location = Location.forGrpcInsecure("0.0.0.0", 8815);
-        try (BufferAllocator allocator = new RootAllocator()) {
+        Location location = Location.forGrpcInsecure("0.0.0.0", 33333);
+        try (BufferAllocator allocator = new RootAllocator()){
             // Server
-            try (final CookbookProducer producer = new CookbookProducer(allocator, location);
-                 final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
+            try(final CookbookProducer producer = new CookbookProducer(allocator, location);
+                final FlightServer flightServer = FlightServer.builder(allocator, location, producer).build()) {
                 try {
                     flightServer.start();
                     System.out.println("S1: Server (Location): Listening on port " + flightServer.getPort());
@@ -27,10 +26,7 @@ public class ArrowServer {
                     throw new RuntimeException(e);
                 }
 
-                // Server shut down
-                Thread.sleep(900000000);
-                flightServer.shutdown();
-                System.out.println("C8: Server shut down successfully");
+                Thread.sleep(999999999);
 
             } catch (Exception e) {
                 e.printStackTrace();

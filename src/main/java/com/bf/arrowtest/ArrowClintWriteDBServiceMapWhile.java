@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ArrowClintWriteMapWhile {
+public class ArrowClintWriteDBServiceMapWhile {
     public static void main(String[] args) {
 
-        Location location = Location.forGrpcInsecure("127.0.0.1", 8815);
+        Location location = Location.forGrpcInsecure("127.0.0.1", 33333);
 //        Location location = Location.forGrpcInsecure("10.162.4.45", 8815);
         try (BufferAllocator allocator = new RootAllocator()) {
 
@@ -47,7 +47,7 @@ public class ArrowClintWriteMapWhile {
 
                     // 创建 StreamListener 只做一次
                     FlightClient.ClientStreamListener listener = flightClient.startPut(
-                            FlightDescriptor.path("file_realtime_001_schema888"),
+                            FlightDescriptor.path("profiles"),
                             vectorSchemaRoot, new AsyncPutListener());
 
                     // 设置行数为1，因为我们假设每次发送一行数据
